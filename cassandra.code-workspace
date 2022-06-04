@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "cassandra-rs",
+			"path": "cassandra-rs"
+		},
+		{
+			"name": "cassandra",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
