@@ -1,11 +1,11 @@
-use std::net::TcpListener;
+#[macro_use] extern crate rocket;
 
-fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+#[get("/")]
+fn index() -> &'static str {
+    "Hello, world!"
+}
 
-    for stream in listener.incoming() {
-        let _stream = stream.unwrap();
-
-        println!("Connection established!");
-    }
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![index])
 }
