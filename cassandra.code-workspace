@@ -5,7 +5,7 @@
 			"path": "cassandra-rs"
 		},
 		{
-			"name": "cassandra",
+			"name": "root",
 			"path": "."
 		}
 	],
