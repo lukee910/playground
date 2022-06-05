@@ -7,8 +7,8 @@ pub fn get(table: &str, id: &str, cell: &str) -> String {
     format!("Getting cell {} of key {} in table {}", cell, id, table)
 }
 
-#[post("/<table>/<id>", format = "json", data = "<mutationJson>")]
-pub fn post(table: &str, id: &str, mutationJson: Json<RowMutation>) -> String {
-    let mutation = mutationJson.into_inner();
-    format!("Temp")
+#[post("/<table>/<id>", format = "json", data = "<mutation_json>")]
+pub fn post(table: &str, id: &str, mutation_json: Json<RowMutation>) -> String {
+    let _mutation = mutation_json.into_inner();
+    format!("Temp {} {}", table, id)
 }
