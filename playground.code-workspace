@@ -5,6 +5,10 @@
 			"path": "cassandra-rs"
 		},
 		{
+			"name": "playground-rs",
+			"path": "playground-rs"
+		},
+		{
 			"name": "root",
 			"path": "."
 		}

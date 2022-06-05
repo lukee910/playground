@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch cassandra-rs",
+      "name": "Launch playground-rs",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/target/debug/cassandra-rs",
+      "program": "${workspaceFolder}/target/debug/playground-rs",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
