@@ -8,7 +8,7 @@
       "name": "Launch playground-rs",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/target/debug/playground-rs",
+      "program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,

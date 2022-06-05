@@ -1,16 +1,16 @@
 {
 	"folders": [
 		{
+			"name": "root",
+			"path": "."
+		},
+		{
 			"name": "cassandra-rs",
 			"path": "cassandra-rs"
 		},
 		{
 			"name": "playground-rs",
 			"path": "playground-rs"
-		},
-		{
-			"name": "root",
-			"path": "."
 		}
 	],
 	"settings": {}

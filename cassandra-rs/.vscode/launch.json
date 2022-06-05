@@ -8,7 +8,7 @@
       "name": "Launch cassandra-rs",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/target/debug/cassandra-rs",
+      "program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
