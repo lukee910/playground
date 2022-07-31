@@ -1,0 +1,64 @@
+﻿@page "/Kanji/Edit/{id?}"
+@using BlazorTest.ServerSide.Models
+@using BlazorTest.ServerSide.Data
+@inject IKanjiRepository KanjiRepo
+
+<h3>@(IsNew ? "Add" : "Edit") Kanji</h3>
+
+@if (kanji != null)
+{
+    <EditForm Model="@kanji" OnValidSubmit="@Save">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <p>
+            <label for="char">Character</label>
+            <InputText id="char" @bind-value="kanji.Char" ValueExpression="() => kanji.Char"></InputText>
+            <ValidationMessage For="() => kanji.Char"></ValidationMessage>
+        </p>
+
+        @* <h4>Meanings</h4> *@
+        @* @for (var i = 0; i < MeaningsCount; i++) *@
+        @* { *@
+        @*     <InputText @bind-value="kanji.Meanings[i]"></InputText> *@
+        @*     <ValidationMessage For="() => kanji.Meanings[i]"></ValidationMessage> *@
+        @* } *@
+
+        <button type="submit">Save</button>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    private Kanji kanji;
+
+    private bool IsNew => Id == null;
+
+    private int MeaningsCount => kanji?.Meanings.Count ?? 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (IsNew)
+        {
+            kanji = new Kanji
+            {
+                Id = Guid.NewGuid(),
+                Meanings = new List<string>(),
+                Readings = new List<Reading>()
+            };
+        }
+        else
+        {
+            kanji = await KanjiRepo.GetKanji(Id.Value);
+        }
+    }
+
+    private void Save()
+    {
+        Console.WriteLine("Submitted " + this.kanji.Char);
+    }
+
+}

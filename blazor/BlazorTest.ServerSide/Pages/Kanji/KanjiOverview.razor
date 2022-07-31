@@ -1,0 +1,35 @@
+﻿@page "/Kanji"
+@using BlazorTest.ServerSide.Data
+@using BlazorTest.ServerSide.Models
+@inject IKanjiRepository KanjiRepo
+@inject NavigationManager NavigationManager
+
+<h1>Kanji Overview</h1>
+
+<button @onclick="AddKanji">Add Kanji</button>
+
+<div>
+    @foreach (var k in kanjis)
+    {
+        <p>@k.Char</p>
+    }
+</div>
+
+@code {
+    private List<Kanji> kanjis = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        kanjis = await KanjiRepo.GetKanjis();
+    }
+
+    private void AddKanji()
+    {
+        NavigationManager.NavigateTo("Kanji/Edit");
+    }
+
+    // private void EditKanji(Kanji kanji)
+    // {
+    //     NavigationManager.NavigateTo($"Kanji/Edit/{kanji.Id}");
+    // }
+}
