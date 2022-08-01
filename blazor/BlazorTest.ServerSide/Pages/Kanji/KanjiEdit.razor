@@ -2,6 +2,7 @@
 @using BlazorTest.ServerSide.Models
 @using BlazorTest.ServerSide.Data
 @inject IKanjiRepository KanjiRepo
+@inject NavigationManager NavigationManager
 
 <h3>@(IsNew ? "Add" : "Edit") Kanji</h3>
 
@@ -17,13 +18,15 @@
             <ValidationMessage For="() => kanji.Char"></ValidationMessage>
         </p>
 
-        @* <h4>Meanings</h4> *@
-        @* @for (var i = 0; i < MeaningsCount; i++) *@
-        @* { *@
-        @*     <InputText @bind-value="kanji.Meanings[i]"></InputText> *@
-        @*     <ValidationMessage For="() => kanji.Meanings[i]"></ValidationMessage> *@
-        @* } *@
+        <h4>Meanings</h4>
+        <button @onclick="AddMeaning" type="button">Add Meaning</button>
+        @foreach (var meaning in meanings)
+        {
+            <InputText @bind-value="meaning.Meaning" ValueExpression="() => meaning.Meaning"></InputText>
+            <ValidationMessage For="() => meaning.Meaning"></ValidationMessage>
+        }
 
+        <br/>
         <button type="submit">Save</button>
     </EditForm>
 }
@@ -33,11 +36,10 @@
     [Parameter]
     public Guid? Id { get; set; }
 
-    private Kanji kanji;
+    private Kanji kanji = new();
+    private readonly List<MeaningRef> meanings = new();
 
     private bool IsNew => Id == null;
-
-    private int MeaningsCount => kanji?.Meanings.Count ?? 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,11 +56,50 @@
         {
             kanji = await KanjiRepo.GetKanji(Id.Value);
         }
+        SetMeanings();
     }
 
-    private void Save()
+    private async Task Save()
     {
         Console.WriteLine("Submitted " + this.kanji.Char);
+        await KanjiRepo.AddKanji(kanji);
+        NavigationManager.NavigateTo("Kanji");
+    }
+
+    private void AddMeaning()
+    {
+        kanji.Meanings.Add(string.Empty);
+        meanings.Add(new MeaningRef(kanji, kanji.Meanings.Count - 1, string.Empty));
+    }
+
+    private void SetMeanings()
+    {
+        meanings.Clear();
+        for (var i = 0; i < kanji.Meanings.Count; i++)
+        {
+            var meaningRef = new MeaningRef(kanji, i, kanji.Meanings[i]);
+            meanings.Add(meaningRef);
+        }
+    }
+
+    private class MeaningRef
+    {
+        private readonly Kanji kanji;
+        private readonly int index;
+        private string meaning;
+
+        public string Meaning
+        {
+            get => meaning;
+            set => kanji.Meanings[index] = meaning = value;
+        }
+
+        public MeaningRef(Kanji kanji, int index, string meaning)
+        {
+            this.kanji = kanji;
+            this.index = index;
+            this.meaning = meaning;
+        }
     }
 
 }

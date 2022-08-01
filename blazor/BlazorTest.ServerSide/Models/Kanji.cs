@@ -14,7 +14,7 @@ public class Kanji
     [MinLength(1)]
     public List<string> Meanings { get; set; }
     
-    [Required]
-    [MinLength(1)]
+    // [Required]
+    // [MinLength(1)]
     public List<Reading> Readings { get; set; }
 }
